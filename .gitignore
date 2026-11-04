@@ -1,0 +1,6 @@
+# full-res originals (211 MB): source for make_images.py, not needed by the site; kept off the public repo
+Artworks/
+__pycache__/
+Thumbs.db
+desktop.ini
+.DS_Store
