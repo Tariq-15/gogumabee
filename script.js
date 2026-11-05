@@ -3,6 +3,10 @@ const [{ items: ART }, site] = await Promise.all(["gallery", "site"].map(n => fe
 
 const esc = t => String(t ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" })[c]);
 
+const md = t => esc(t).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>"); // **bold** is the only markup editors get
+document.getElementById("about-text").innerHTML = site.about.map(p => `<p>${md(p)}</p>`).join("");
+document.getElementById("faq-list").innerHTML = site.faq.map(f => `<details class="sketch-box"><summary>${esc(f.q)}</summary><p>${md(f.a)}</p></details>`).join("");
+
 document.querySelector(".sticky b").textContent = site.status;
 const mq = document.querySelector(".marquee div");
 mq.textContent = mq.textContent.replaceAll("commissions open", `commissions ${site.status.toLowerCase()}`);

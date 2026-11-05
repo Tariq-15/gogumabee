@@ -39,7 +39,7 @@ collections:
     icon: sell
     files:
       - name: site
-        label: Status & prices
+        label: Status, prices, about & FAQ
         file: content/site.json
         fields:
           - { name: status, label: Commissions are, widget: select, options: [OPEN, CLOSED] }
@@ -57,3 +57,13 @@ collections:
               - { name: items, label: What's included, widget: list, field: { name: item, widget: string } }
               - { name: type, label: Name in the order form, widget: string }
               - { name: featured, label: Highlight as "most loved", widget: boolean, required: false }
+          - { name: about, label: About text (one box per paragraph), widget: list, field: { name: paragraph, widget: text } }
+          - name: faq
+            label: FAQ
+            hint: Use **double stars** for bold.
+            widget: list
+            collapsed: true
+            summary: '{{fields.q}}'
+            fields:
+              - { name: q, label: Question, widget: string }
+              - { name: a, label: Answer, widget: text }
