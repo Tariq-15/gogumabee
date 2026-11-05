@@ -1,0 +1,9 @@
+{
+ "status": "OPEN",
+ "cards": [
+  {"image": "img/t/IMG20251030143317.webp", "pos": "50% 30%", "alt": "Example: pencil portrait of a boy pointing at a star on his cheek", "title": "Pencil Sketch", "price": "$15", "items": ["graphite on real paper", "headshot or bust", "clean scan / photo of the page", "1 sketch check before shading"], "type": "Pencil sketch", "featured": false},
+  {"image": "img/t/Untitled125.webp", "pos": "50% 25%", "alt": "Example: digital portrait of a boy with sunglasses on his head and a black star on his cheek", "title": "Coloured Portrait", "price": "$30", "items": ["digital colour", "bust or half body", "plain or doodle background", "high-res PNG + JPG"], "type": "Coloured portrait", "featured": false},
+  {"image": "img/t/ships-duo.webp", "alt": "Example: pencil drawing of two boys in matching red sweaters taking a mirror selfie, one saying '조슈지~'", "title": "Ships & Duos", "price": "$45", "items": ["your favorite K-pop ships / OCs", "pencil or coloured", "bust or half body", "plain or doodle background"], "type": "Ship / duo", "featured": true},
+  {"image": "img/t/Untitled251_20261027144922.webp", "pos": "50% 35%", "alt": "Example: chibi of a blond boy with cat ears in a grey hoodie", "title": "Chibi", "price": "$10", "items": ["full-body chibi, 1 character", "your pose & expression", "transparent PNG", "great for pfps & stickers"], "type": "Chibi", "featured": false}
+ ]
+}

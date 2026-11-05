@@ -1,0 +1,49 @@
+backend:
+  name: github
+  repo: Tariq-15/gogumabee
+  branch: main
+media_folder: img/uploads
+public_folder: img/uploads
+media_libraries:
+  default:
+    config:
+      transformations:
+        raster_image: { format: webp, quality: 82, width: 1200 }
+collections:
+  - name: gallery
+    label: Artwork gallery
+    files:
+      - name: gallery
+        label: Gallery (newest first)
+        file: content/gallery.json
+        fields:
+          - name: items
+            label: Artworks
+            widget: list
+            fields:
+              - { name: image, label: Image, widget: image }
+              - { name: cats, label: Categories, widget: select, multiple: true, options: [{label: Pencil sketches, value: sketch}, {label: Coloured, value: color}, {label: Ships & duos, value: ship}, {label: Chibis & doodles, value: chibi}, {label: Full body, value: extra}] }
+              - { name: alt, label: Description (for screen readers), widget: string }
+              - { name: thumb, widget: hidden, required: false }
+              - { name: w, widget: hidden, required: false }
+              - { name: h, widget: hidden, required: false }
+  - name: site
+    label: Commissions
+    files:
+      - name: site
+        label: Status & prices
+        file: content/site.json
+        fields:
+          - { name: status, label: Commissions are, widget: select, options: [OPEN, CLOSED] }
+          - name: cards
+            label: Price cards
+            widget: list
+            fields:
+              - { name: image, label: Example image, widget: image }
+              - { name: pos, widget: hidden, required: false }
+              - { name: alt, label: Image description, widget: string }
+              - { name: title, label: Title, widget: string }
+              - { name: price, label: Starting price (e.g. $15), widget: string }
+              - { name: items, label: What's included, widget: list, field: { name: item, widget: string } }
+              - { name: type, label: Name in the order form, widget: string }
+              - { name: featured, label: Highlight as "most loved", widget: boolean, required: false }
