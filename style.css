@@ -166,7 +166,6 @@ h3 { margin: .2em 0; }
 .card:nth-child(odd) { border-radius: var(--wob2); }
 .card:hover { rotate: -1deg; }
 .card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 2px solid var(--ink); border-radius: 6px 14px 8px 12px; margin-bottom: 10px; }
-.card .tag { color: var(--blue); margin: 0; font-size: 1.2rem; }
 .card h3 { font: 2rem/1 var(--serif); }
 .price { font-size: 1.3rem; margin: 6px 0 4px; color: var(--muted); }
 .price b { color: var(--ink); font-size: 2.4rem; font-weight: 400; }
