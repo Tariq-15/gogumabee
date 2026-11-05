@@ -12,100 +12,28 @@ media_libraries:
       transformations:
         raster_image: { format: webp, quality: 82, width: 1200 }
 collections:
-  - name: gallery
-    label: Artwork gallery
+  - name: art
+    label: Artwork
+    label_singular: artwork
     icon: photo_library
-    files:
-      - name: gallery-sketch
-        label: Pencil sketches
-        file: content/gallery-sketch.json
-        fields:
-          - name: items
-            label: Pencil sketches
-            hint: New artworks go to the top. Click one to edit, or drag to reorder.
-            widget: list
-            add_to_top: true
-            collapsed: true
-            summary: '{{fields.alt}}'
-            fields:
-              - { name: image, label: Image, widget: image }
-              - { name: alt, label: Description, hint: Short sentence about the drawing. Also used for screen readers., widget: string }
-              - { name: also, label: Also show under (optional), widget: select, multiple: true, required: false, options: [{label: Pencil sketches, value: sketch}, {label: Coloured, value: color}, {label: Ships & duos, value: ship}, {label: Chibis & doodles, value: chibi}, {label: Full body, value: extra}] }
-              - { name: thumb, widget: hidden, required: false }
-              - { name: w, widget: hidden, required: false }
-              - { name: h, widget: hidden, required: false }
-      - name: gallery-color
-        label: Coloured
-        file: content/gallery-color.json
-        fields:
-          - name: items
-            label: Coloured
-            hint: New artworks go to the top. Click one to edit, or drag to reorder.
-            widget: list
-            add_to_top: true
-            collapsed: true
-            summary: '{{fields.alt}}'
-            fields:
-              - { name: image, label: Image, widget: image }
-              - { name: alt, label: Description, hint: Short sentence about the drawing. Also used for screen readers., widget: string }
-              - { name: also, label: Also show under (optional), widget: select, multiple: true, required: false, options: [{label: Pencil sketches, value: sketch}, {label: Coloured, value: color}, {label: Ships & duos, value: ship}, {label: Chibis & doodles, value: chibi}, {label: Full body, value: extra}] }
-              - { name: thumb, widget: hidden, required: false }
-              - { name: w, widget: hidden, required: false }
-              - { name: h, widget: hidden, required: false }
-      - name: gallery-ship
-        label: Ships & duos
-        file: content/gallery-ship.json
-        fields:
-          - name: items
-            label: Ships & duos
-            hint: New artworks go to the top. Click one to edit, or drag to reorder.
-            widget: list
-            add_to_top: true
-            collapsed: true
-            summary: '{{fields.alt}}'
-            fields:
-              - { name: image, label: Image, widget: image }
-              - { name: alt, label: Description, hint: Short sentence about the drawing. Also used for screen readers., widget: string }
-              - { name: also, label: Also show under (optional), widget: select, multiple: true, required: false, options: [{label: Pencil sketches, value: sketch}, {label: Coloured, value: color}, {label: Ships & duos, value: ship}, {label: Chibis & doodles, value: chibi}, {label: Full body, value: extra}] }
-              - { name: thumb, widget: hidden, required: false }
-              - { name: w, widget: hidden, required: false }
-              - { name: h, widget: hidden, required: false }
-      - name: gallery-chibi
-        label: Chibis & doodles
-        file: content/gallery-chibi.json
-        fields:
-          - name: items
-            label: Chibis & doodles
-            hint: New artworks go to the top. Click one to edit, or drag to reorder.
-            widget: list
-            add_to_top: true
-            collapsed: true
-            summary: '{{fields.alt}}'
-            fields:
-              - { name: image, label: Image, widget: image }
-              - { name: alt, label: Description, hint: Short sentence about the drawing. Also used for screen readers., widget: string }
-              - { name: also, label: Also show under (optional), widget: select, multiple: true, required: false, options: [{label: Pencil sketches, value: sketch}, {label: Coloured, value: color}, {label: Ships & duos, value: ship}, {label: Chibis & doodles, value: chibi}, {label: Full body, value: extra}] }
-              - { name: thumb, widget: hidden, required: false }
-              - { name: w, widget: hidden, required: false }
-              - { name: h, widget: hidden, required: false }
-      - name: gallery-extra
-        label: Full body
-        file: content/gallery-extra.json
-        fields:
-          - name: items
-            label: Full body
-            hint: New artworks go to the top. Click one to edit, or drag to reorder.
-            widget: list
-            add_to_top: true
-            collapsed: true
-            summary: '{{fields.alt}}'
-            fields:
-              - { name: image, label: Image, widget: image }
-              - { name: alt, label: Description, hint: Short sentence about the drawing. Also used for screen readers., widget: string }
-              - { name: also, label: Also show under (optional), widget: select, multiple: true, required: false, options: [{label: Pencil sketches, value: sketch}, {label: Coloured, value: color}, {label: Ships & duos, value: ship}, {label: Chibis & doodles, value: chibi}, {label: Full body, value: extra}] }
-              - { name: thumb, widget: hidden, required: false }
-              - { name: w, widget: hidden, required: false }
-              - { name: h, widget: hidden, required: false }
+    folder: content/art
+    format: json
+    extension: json
+    create: true
+    slug: '{{year}}{{month}}{{day}}-{{hour}}{{minute}}{{second}}'
+    thumbnail: image
+    summary: '{{alt}}'
+    sortable_fields: { fields: [date], default: { field: date, direction: Descending } }
+    view_groups: [{ label: Category, field: category }]
+    fields:
+      - { name: image, label: Picture, widget: image }
+      - { name: alt, label: Short description, hint: One sentence about the drawing. Also read aloud by screen readers., widget: string }
+      - { name: category, label: Category, widget: select, options: [{label: Pencil sketches, value: sketch}, {label: Coloured, value: color}, {label: Ships & duos, value: ship}, {label: Chibis & doodles, value: chibi}, {label: Full body, value: extra}] }
+      - { name: also, label: Also show under (optional), widget: select, multiple: true, required: false, options: [{label: Pencil sketches, value: sketch}, {label: Coloured, value: color}, {label: Ships & duos, value: ship}, {label: Chibis & doodles, value: chibi}, {label: Full body, value: extra}] }
+      - { name: date, label: Date added, hint: Newest shows first on the site., widget: datetime, default: '{{now}}' }
+      - { name: thumb, widget: hidden, required: false }
+      - { name: w, widget: hidden, required: false }
+      - { name: h, widget: hidden, required: false }
   - name: site
     label: Site content
     icon: edit_note

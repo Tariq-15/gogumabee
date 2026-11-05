@@ -1,10 +1,5 @@
 // Content lives in content/*.json and is edited through /admin (Sveltia CMS).
-const SEGS = ["sketch", "color", "ship", "chibi", "extra"];
-const [status, prices, about, faq, ...segs] = await Promise.all(["status", "prices", "about", "faq", ...SEGS.map(k => `gallery-${k}`)].map(n => fetch(`content/${n}.json`).then(r => r.json())));
-// Interleave the segments so the first page of "all" shows a bit of everything, newest first in each.
-const ART = [];
-for (let i = 0; segs.some(g => i < g.items.length); i++)
-  segs.forEach((g, k) => g.items[i] && ART.push({ ...g.items[i], cats: [SEGS[k], ...(g.items[i].also || [])] }));
+const [status, prices, about, faq, { items: ART }] = await Promise.all(["status", "prices", "about", "faq", "gallery"].map(n => fetch(`content/${n}.json`).then(r => r.json())));
 
 const esc = t => String(t ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" })[c]);
 
