@@ -2,6 +2,8 @@ backend:
   name: github
   repo: Tariq-15/gogumabee
   branch: main
+site_url: https://gogumabee.vercel.app
+logo_url: https://gogumabee.vercel.app/img/logo.png
 media_folder: img/uploads
 public_folder: img/uploads
 media_libraries:
@@ -12,6 +14,7 @@ media_libraries:
 collections:
   - name: gallery
     label: Artwork gallery
+    icon: photo_library
     files:
       - name: gallery
         label: Gallery (newest first)
@@ -19,16 +22,21 @@ collections:
         fields:
           - name: items
             label: Artworks
+            hint: New artworks go to the top. Click one to edit, or drag to reorder.
             widget: list
+            add_to_top: true
+            collapsed: true
+            summary: '{{fields.alt}}'
             fields:
               - { name: image, label: Image, widget: image }
               - { name: cats, label: Categories, widget: select, multiple: true, options: [{label: Pencil sketches, value: sketch}, {label: Coloured, value: color}, {label: Ships & duos, value: ship}, {label: Chibis & doodles, value: chibi}, {label: Full body, value: extra}] }
-              - { name: alt, label: Description (for screen readers), widget: string }
+              - { name: alt, label: Description, hint: Short sentence about the drawing. Also used for screen readers., widget: string }
               - { name: thumb, widget: hidden, required: false }
               - { name: w, widget: hidden, required: false }
               - { name: h, widget: hidden, required: false }
   - name: site
     label: Commissions
+    icon: sell
     files:
       - name: site
         label: Status & prices
@@ -38,6 +46,8 @@ collections:
           - name: cards
             label: Price cards
             widget: list
+            collapsed: true
+            summary: '{{fields.title}} · from {{fields.price}}'
             fields:
               - { name: image, label: Example image, widget: image }
               - { name: pos, widget: hidden, required: false }
