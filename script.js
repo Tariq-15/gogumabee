@@ -1,6 +1,6 @@
 // Content lives in content/*.json and is edited through /admin (Sveltia CMS).
 const SEGS = ["sketch", "color", "ship", "chibi", "extra"];
-const [site, ...segs] = await Promise.all(["site", ...SEGS.map(k => `gallery-${k}`)].map(n => fetch(`content/${n}.json`).then(r => r.json())));
+const [status, prices, about, faq, ...segs] = await Promise.all(["status", "prices", "about", "faq", ...SEGS.map(k => `gallery-${k}`)].map(n => fetch(`content/${n}.json`).then(r => r.json())));
 // Interleave the segments so the first page of "all" shows a bit of everything, newest first in each.
 const ART = [];
 for (let i = 0; segs.some(g => i < g.items.length); i++)
@@ -9,14 +9,14 @@ for (let i = 0; segs.some(g => i < g.items.length); i++)
 const esc = t => String(t ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" })[c]);
 
 const md = t => esc(t).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>"); // **bold** is the only markup editors get
-document.getElementById("about-text").innerHTML = site.about.map(p => `<p>${md(p)}</p>`).join("");
-document.getElementById("faq-list").innerHTML = site.faq.map(f => `<details class="sketch-box"><summary>${esc(f.q)}</summary><p>${md(f.a)}</p></details>`).join("");
+document.getElementById("about-text").innerHTML = about.about.map(p => `<p>${md(p)}</p>`).join("");
+document.getElementById("faq-list").innerHTML = faq.faq.map(f => `<details class="sketch-box"><summary>${esc(f.q)}</summary><p>${md(f.a)}</p></details>`).join("");
 
-document.querySelector(".sticky b").textContent = site.status;
+document.querySelector(".sticky b").textContent = status.status;
 const mq = document.querySelector(".marquee div");
-mq.textContent = mq.textContent.replaceAll("commissions open", `commissions ${site.status.toLowerCase()}`);
+mq.textContent = mq.textContent.replaceAll("commissions open", `commissions ${status.status.toLowerCase()}`);
 
-document.querySelector(".cards").innerHTML = site.cards.map(c => `
+document.querySelector(".cards").innerHTML = prices.cards.map(c => `
   <article class="card sketch-box${c.featured ? " featured" : ""}">
     ${c.featured ? '<span class="badge hand">most loved ♡</span>' : ""}
     <img src="${esc(c.image)}" loading="lazy" ${c.pos ? `style="object-position:${esc(c.pos)}"` : ""} alt="${esc(c.alt)}">

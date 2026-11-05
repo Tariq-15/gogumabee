@@ -1,3 +1,9 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Edit goguma_bee</title></head>
-<body><script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script></body></html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>goguma_bee · edit site</title>
+<link rel="icon" href="../img/logo.png">
+<style>
+  /* Brand the CMS. Sveltia builds every colour from one hue, so this one number recolours it (pink = 335).
+     shortcut: relies on Sveltia's internal --sui-* variables, re-check after bumping the pinned version below. */
+  html:root { --sui-base-hue: 335; } /* html: beats Sveltia own :root rule */
+</style></head>
+<body><script src="https://unpkg.com/@sveltia/cms@0.259.0/dist/sveltia-cms.js"></script></body></html>

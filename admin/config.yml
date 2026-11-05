@@ -107,14 +107,18 @@ collections:
               - { name: w, widget: hidden, required: false }
               - { name: h, widget: hidden, required: false }
   - name: site
-    label: Commissions
-    icon: sell
+    label: Site content
+    icon: edit_note
     files:
-      - name: site
-        label: Status, prices, about & FAQ
-        file: content/site.json
+      - name: status
+        label: Open / closed
+        file: content/status.json
         fields:
-          - { name: status, label: Commissions are, widget: select, options: [OPEN, CLOSED] }
+          - { name: status, label: Are commissions open right now?, widget: select, options: [OPEN, CLOSED] }
+      - name: prices
+        label: Prices
+        file: content/prices.json
+        fields:
           - name: cards
             label: Price cards
             widget: list
@@ -129,7 +133,15 @@ collections:
               - { name: items, label: What's included, widget: list, field: { name: item, widget: string } }
               - { name: type, label: Name in the order form, widget: string }
               - { name: featured, label: Highlight as "most loved", widget: boolean, required: false }
+      - name: about
+        label: About me
+        file: content/about.json
+        fields:
           - { name: about, label: About text (one box per paragraph), widget: list, field: { name: paragraph, widget: text } }
+      - name: faq
+        label: FAQ
+        file: content/faq.json
+        fields:
           - name: faq
             label: FAQ
             hint: Use **double stars** for bold.
