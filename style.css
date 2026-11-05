@@ -226,7 +226,6 @@ textarea { resize: vertical; }
 .footer { margin-top: 80px; overflow: hidden; border-top: 2px solid var(--ink); }
 .giant { font: italic clamp(4rem, 17vw, 15rem)/1 var(--serif); margin: 20px 0 0; text-align: center; color: transparent; -webkit-text-stroke: 1.5px #2d2b2955; white-space: nowrap; }
 .foot-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 10px 0 30px; }
-.foot-row .hand { font-size: 1.3rem; margin: 0; }
 .foot-row .muted { margin: 0; font-size: .9rem; }
 
 /* ---------- lightbox ---------- */
