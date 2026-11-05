@@ -4,8 +4,8 @@ backend:
   branch: main
 site_url: https://gogumabee.vercel.app
 logo_url: https://gogumabee.vercel.app/img/logo.png
-media_folder: img/uploads
-public_folder: img/uploads
+media_folder: img
+public_folder: img
 media_libraries:
   default:
     config:
