@@ -90,59 +90,17 @@ document.querySelectorAll(".filters button").forEach(b => b.onclick = () => {
 });
 more.onclick = () => { expanded = true; render(); };
 
-// Instagram widget: [image in img/t/, caption, likes, comments, reposts, post link (optional; defaults to the profile)]
-// EDIT: swap in real captions + counts. Only the "にゃん〜" caption is copied from her actual feed; all counts are placeholders.
-// Post links are real (profile grid, Nov 2026), matched to drawings by date. Oct 29 / 24 / 23 posts have no drawing in img/ yet, so they're left out.
-// shortcut: counts are typed in by hand, a static site can't read them live (needs Graph API token + backend, and it has no repost count).
-const IG = "https://instagram.com/goguma_bee";
-const PINNED = 1; // the first N posts get a "pinned" badge (Instagram also lists pinned posts first)
-const POSTS = [
-  // pinned Jan 16 2026 reel; drawing is a guess (newest one before that date), swap the slug if it's a different piece
-  ["IMG202601091442271", "aloha from the sketchbook 🌺 #sketchbook #fanart", 2890, 81, 46, IG + "/reel/DTkZ7pAk_o2/"],
-  ["Untitled256_20261101153435", "suit up ✶ graphite and way too much smudging #pencilsketch #fanart", 2140, 58, 31, IG + "/reel/DfM8JLyzsLS/"],
-  ["Untitled256_20261101154539", "frills were a mistake (i'd do it again) #sketch #fullbody", 1870, 42, 19, IG + "/reel/DfM8JLyzsLS/"],
-  ["Untitled252_20261027152921", "にゃん〜 #yuma #ゆうま #andteam #fanart", 3260, 94, 57, IG + "/p/De_yKJwEx7e/"],
-  ["Untitled251_20261027144922", "nyan ✶ tiny chibi break between big pieces #chibi #doodle", 1520, 37, 14, IG + "/p/De_yKJwEx7e/"],
-  ["Untitled246_20261019174810", "bestie energy only 🐰 #fanart #digitalart", 2480, 66, 40, IG + "/p/DerMUq3EyYh/"],
-  ["Untitled245_20261016153906", "a quiet one on toned paper #pencil #sketchbook", 1190, 28, 9, IG + "/p/DejdGiOk0SB/"],
-  ["Untitled243_20261014150909", "me every monday #chibi #doodle", 1730, 51, 22, IG + "/p/DeeZvLOk4Hy/"],
-  ["Untitled242_20261012171956", "sharing is caring (the blanket, i mean) #fanart #ship", 2050, 73, 35, IG + "/p/DeZLBIQExYA/"],
-];
-const igTrack = document.getElementById("igTrack");
-const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
-const fmt = new Intl.NumberFormat("en", { notation: "compact" }).format; // 2140 → "2.1K"
-const ICONS = { // Feather icon paths
-  likes: "M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.2l7.8-7.8 1-1.1a5.5 5.5 0 0 0 0-7.8z",
-  comments: "M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z",
-  reposts: "M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3",
-  pinned: "M12 17v5M9 10.8a2 2 0 0 1-1.1 1.8l-1.8.9A2 2 0 0 0 5 15.2V17h14v-1.8a2 2 0 0 0-1.1-1.8l-1.8-.9a2 2 0 0 1-1.1-1.8V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z", // Lucide pin
-};
-const icon = k => `<svg role="img" viewBox="0 0 24 24"><title>${k}</title><path d="${ICONS[k]}"/></svg>`;
-const stat = (k, n) => `<span class="ig-${k}">${icon(k)}${fmt(n)}</span>`;
-igTrack.innerHTML = POSTS.map(([slug, cap, likes, comments, reposts, url = IG], i) => {
-  const alt = (ART.find(a => a[0] === slug) || [])[2] || "";
-  return `<a class="ig-post" href="${esc(url)}" target="_blank" rel="noopener" style="--r:${i % 2 ? 1.2 : -1.2}deg">
-     ${i < PINNED ? `<span class="ig-pin">${icon("pinned")}</span>` : ""}
-     <p class="ig-cap">${esc(cap).replace(/#[^\s#]+/g, '<span class="ht">$&</span>')}</p>
-     <img src="img/t/${slug}.webp" alt="${esc(alt)}" loading="lazy" decoding="async">
-     <span class="ig-foot hand"><span class="ig-stats">${stat("likes", likes)}${stat("comments", comments)}${stat("reposts", reposts)}</span><span>↗</span></span>
-   </a>`;
-}).join("");
-document.querySelectorAll(".ig-arrows button").forEach(b => b.onclick = () =>
-  igTrack.scrollBy({ left: b.dataset.dir * igTrack.clientWidth, behavior: "smooth" }));
-
 // Lightbox (native <dialog>: Esc closes for free)
 const lb = document.getElementById("lb");
-const lbImg = lb.querySelector("img"), lbCap = lb.querySelector("figcaption");
+const lbImg = lb.querySelector("img");
 let cur = 0;
 const matching = () => [...grid.children].filter(el => el.match);
 function show(i) {
   const list = matching();
   cur = (i + list.length) % list.length;
-  const el = list[cur], alt = el.querySelector("img").alt;
+  const el = list[cur];
   lbImg.src = `img/${el.dataset.slug}.webp`;
-  lbImg.alt = alt;
-  lbCap.textContent = alt;
+  lbImg.alt = el.querySelector("img").alt;
 }
 grid.onclick = e => {
   const el = e.target.closest(".polaroid");
