@@ -32,12 +32,14 @@
   },
   {
    "image": "img/t/ships-duo.webp",
-   "alt": "Example: pencil drawing of two boys in matching red sweaters taking a mirror selfie, one saying '조슈지~'",
+   "alt": "Colour example: pencil drawing of two boys in matching red sweaters taking a mirror selfie, one saying '조슈지~'",
+   "image2": "img/t/ships-duo-bw.webp",
+   "alt2": "Sketch example: black and white pencil drawing of two boys with cigarettes, one resting his hand on the other's head",
    "title": "Ships & Duos",
    "price": "$45",
    "items": [
     "your favorite K-pop ships / OCs",
-    "pencil or coloured",
+    "sketch only $45 · add colour +$5 ($50)",
     "bust or half body",
     "plain or doodle background"
    ],

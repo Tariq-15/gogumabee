@@ -1,5 +1,5 @@
 // Content lives in content/*.json and is edited through /admin (Sveltia CMS).
-const [status, prices, about, faq, { items: ART }] = await Promise.all(["status", "prices", "about", "faq", "gallery"].map(n => fetch(`content/${n}.json`).then(r => r.json())));
+const [status, prices, about, faq, { categories }, { items: ART }] = await Promise.all(["status", "prices", "about", "faq", "categories", "gallery"].map(n => fetch(`content/${n}.json`).then(r => r.json())));
 
 const esc = t => String(t ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" })[c]);
 
@@ -11,10 +11,11 @@ document.querySelector(".sticky b").textContent = status.status;
 const mq = document.querySelector(".marquee div");
 mq.textContent = mq.textContent.replaceAll("commissions open", `commissions ${status.status.toLowerCase()}`);
 
+const cardImg = (src, alt, pos) => `<img src="${esc(src)}" loading="lazy" ${pos ? `style="object-position:${esc(pos)}"` : ""} alt="${esc(alt)}">`;
 document.querySelector(".cards").innerHTML = prices.cards.map(c => `
   <article class="card sketch-box${c.featured ? " featured" : ""}">
     ${c.featured ? '<span class="badge hand">most loved ♡</span>' : ""}
-    <img src="${esc(c.image)}" loading="lazy" ${c.pos ? `style="object-position:${esc(c.pos)}"` : ""} alt="${esc(c.alt)}">
+    ${c.image2 ? `<div class="pair">${cardImg(c.image2, c.alt2, "50% 25%")}${cardImg(c.image, c.alt, c.pos)}</div>` : cardImg(c.image, c.alt, c.pos)}
     <h3>${esc(c.title)}</h3>
     <p class="price hand">from <b>${esc(c.price)}</b></p>
     <ul>${c.items.map(i => `<li>${esc(i)}</li>`).join("")}</ul>
@@ -25,6 +26,11 @@ const LIMIT = 12;
 const grid = document.getElementById("grid");
 const more = document.getElementById("more");
 let filter = "all", expanded = false;
+
+// one filter button per category that has at least one artwork (a new, still-empty category stays hidden)
+document.querySelector(".filters").insertAdjacentHTML("beforeend", categories
+  .filter(c => ART.some(a => a.cats.includes(c.id)))
+  .map(c => `<button aria-pressed="false" data-f="${esc(c.id)}">${esc(c.label)}</button>`).join(""));
 
 grid.innerHTML = ART.map(({ image, thumb, cats, alt, w, h }, i) =>
   `<button class="polaroid" data-full="${esc(image)}" data-cats="${esc(cats.join(" "))}" style="--r:${((i * 37) % 7 - 3) * 0.8}deg">

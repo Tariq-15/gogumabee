@@ -140,7 +140,7 @@ h3 { margin: .2em 0; }
 .grid .polaroid:nth-child(4n+1)::before { background: #fff0a3cc; }
 .grid .polaroid:hover, .grid .polaroid:focus-visible { rotate: 0deg; transform: scale(1.03); box-shadow: 8px 12px 0 #2d2b2926; z-index: 2; }
 .grid img { width: 100%; height: auto; background: #eee; }
-.grid .polaroid[hidden] { display: none; }
+[hidden] { display: none !important; } /* else .btn/.polaroid display rules override the hidden attribute */
 
 /* ---------- about ---------- */
 .about { display: grid; grid-template-columns: 380px 1fr; gap: 70px; align-items: center; }
@@ -164,6 +164,16 @@ h3 { margin: .2em 0; }
 .card:nth-child(odd) { border-radius: var(--wob2); }
 .card:hover { rotate: -1deg; }
 .card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 2px solid var(--ink); border-radius: 6px 14px 8px 12px; margin-bottom: 10px; }
+/* two example images stacked like cards; the front one slides out and tucks behind every 2s */
+.card .pair { display: grid; margin: 6px 0 14px; isolation: isolate; }
+.card .pair img { grid-area: 1 / 1; margin: 0; box-shadow: 4px 5px 0 #2d2b2922; animation: shuffle 4s infinite; }
+.card .pair img:last-child { animation-delay: -2s; }
+@keyframes shuffle {
+  0%, 40% { z-index: 2; transform: rotate(2deg); }
+  46% { z-index: 2; transform: translate(-22%, -6%) rotate(-12deg); }
+  52%, 90% { z-index: 1; transform: translate(-4%, -4%) rotate(-6deg) scale(.96); }
+  100% { z-index: 2; transform: rotate(2deg); }
+}
 .card h3 { font: 2rem/1 var(--serif); }
 .price { font-size: 1.3rem; margin: 6px 0 4px; color: var(--muted); }
 .price b { color: var(--ink); font-size: 2.4rem; font-weight: 400; }
@@ -218,7 +228,6 @@ input, select, textarea {
 textarea { resize: vertical; }
 .check { display: flex !important; align-items: center; gap: 10px; }
 .check input { width: 20px; height: 20px; accent-color: var(--ink); }
-.done[hidden] { display: none; }
 .done { display: grid; gap: 10px; border-top: 2px dashed #2d2b2944; padding-top: 14px; }
 .done p { margin: 0; font-size: 1.4rem; color: var(--blue); }
 

@@ -28,8 +28,9 @@ collections:
     fields:
       - { name: image, label: Picture, widget: image }
       - { name: alt, label: Short description, hint: One sentence about the drawing. Also read aloud by screen readers., widget: string }
-      - { name: category, label: Category, widget: select, options: [{label: Pencil sketches, value: sketch}, {label: Coloured, value: color}, {label: Ships & duos, value: ship}, {label: Chibis & doodles, value: chibi}, {label: Full body, value: extra}] }
-      - { name: also, label: Also show under (optional), widget: select, multiple: true, required: false, options: [{label: Pencil sketches, value: sketch}, {label: Coloured, value: color}, {label: Ships & duos, value: ship}, {label: Chibis & doodles, value: chibi}, {label: Full body, value: extra}] }
+      # options come from Site content > Gallery categories
+      - { name: category, label: Category, widget: relation, collection: site, file: categories, value_field: 'categories.*.id', display_fields: ['categories.*.label'], search_fields: ['categories.*.label'] }
+      - { name: also, label: Also show under (optional), widget: relation, multiple: true, required: false, collection: site, file: categories, value_field: 'categories.*.id', display_fields: ['categories.*.label'], search_fields: ['categories.*.label'] }
       - { name: date, label: Date added, hint: Newest shows first on the site., widget: datetime, default: '{{now}}' }
       - { name: thumb, widget: hidden, required: false }
       - { name: w, widget: hidden, required: false }
@@ -43,6 +44,19 @@ collections:
         file: content/status.json
         fields:
           - { name: status, label: Are commissions open right now?, widget: select, options: [OPEN, CLOSED] }
+      - name: categories
+        label: Gallery categories
+        file: content/categories.json
+        fields:
+          - name: categories
+            label: Categories
+            hint: These are the filter buttons above the gallery, in this order. A category only shows once it has at least one artwork.
+            widget: list
+            collapsed: true
+            summary: '{{fields.label}}'
+            fields:
+              - { name: label, label: Button text, widget: string }
+              - { name: id, label: Short code, hint: "Lowercase, no spaces (e.g. fanart). Don't change it later or artworks lose their category.", widget: string, pattern: ['^[a-z0-9-]+$', 'Lowercase letters, numbers and dashes only'] }
       - name: prices
         label: Prices
         file: content/prices.json
@@ -56,6 +70,8 @@ collections:
               - { name: image, label: Example image, widget: image }
               - { name: pos, widget: hidden, required: false }
               - { name: alt, label: Image description, widget: string }
+              - { name: image2, label: "Second example image, shown first (optional, e.g. sketch-only version)", widget: image, required: false }
+              - { name: alt2, label: Second image description, widget: string, required: false }
               - { name: title, label: Title, widget: string }
               - { name: price, label: Starting price (e.g. $15), widget: string }
               - { name: items, label: What's included, widget: list, field: { name: item, widget: string } }

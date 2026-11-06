@@ -1,0 +1,9 @@
+{
+ "categories": [
+  { "id": "sketch", "label": "pencil sketches" },
+  { "id": "color", "label": "coloured" },
+  { "id": "ship", "label": "ships & duos" },
+  { "id": "chibi", "label": "chibis & doodles" },
+  { "id": "extra", "label": "full body" }
+ ]
+}
